@@ -27,9 +27,7 @@ while True:
   ##responses=response.json()
   ##print(response.text)
   ##state=responses["abas"]
- ## print(state)
+ ##print(state)
   utime.sleep(3)
   response.close()
   gc.collect()
-
-

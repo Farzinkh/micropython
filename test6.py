@@ -9,18 +9,19 @@ gc.enable()
 s=network.WLAN(network.STA_IF) ##sazekar client kardan mothole
 s.active(True)
 s.connect('Anonymous','6339tktz6z') ##ssid va password wifi
-url='http://192.168.43.79:8000/delta/tele/led'
+url='http://192.168.43.79:8000/delta/tele/led/'
 dade={
-'state':'gogol'
+'moisture':677
 } ##dade ke ghast ersal on be server ra darem
 dict={
 } ##dictionary baraye daryaft response
-dade=ujson.dumps(dade) ##seralize kardan dade be form json
 while True:
     data=adc.read()##tabdel etelat az analog be digital
     ##response=requests.post(url,data=dade,headers={'Connection':'close'})
-    response=requests.get(url , data=dade)
-    print(response.text)
+    send=requests.request('GET', url , json=dade , stream=False)
+    ##response=requests.get(url)
+    ##x=send.json()
+    print(send.text)
     ##x=response.text
     ##dict=ujson.load(x)
     ##responses=ujson.load(response)
@@ -30,5 +31,6 @@ while True:
     ##state=responses["abas"]
     ##print(state)
     utime.sleep(3)
-    response.close()
+    send.close()
     gc.collect()
+

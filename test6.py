@@ -31,23 +31,23 @@ dade={
 } ##dade ke ghast ersal on be server ra darem
 dict={
 } ##dictionary baraye daryaft response
+dade_dic=ujson.dumps(dade)
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 while True:
     data=adc.read()##tabdel etelat az analog be digital
     ##response=requests.post(url,data=dade,headers={'Connection':'close'})
-    send=requests.request('GET', url , json=dade , stream=False)
+    send=requests.request('POST', url, data=dade_dic,headers=headers, stream=False)
+    print(send.status_code)
     ##response=requests.get(url)
     ##x=send.json()
     print(send.text)
-    ##x=response.text
     ##dict=ujson.load(x)
     ##responses=ujson.load(response)
     ##response=requests.get(url)
     ##responses=response.json()
-    ##print(response.text)
     ##state=responses["abas"]
     ##print(state)
     utime.sleep(3)
     send.close()
     gc.collect()
-
 

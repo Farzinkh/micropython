@@ -47,7 +47,8 @@ while True:
     ##responses=response.json()
     ##state=responses["abas"]
     ##print(state)
-    utime.sleep(3)
+    utime.sleep(1)
     send.close()
     gc.collect()
+
 

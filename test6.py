@@ -7,8 +7,9 @@ from machine import Pin,ADC ##tanzem halet pin ha
 adc=machine.ADC(0) ##taref pin analog
 gc.enable()
 led=Pin(2,Pin.OUT) 
-##pinMode(0, INPUT_PULLUP)
+led2=Pin(14,Pin.OUT)
 button=Pin(0,Pin.IN)
+led.value(1)
 def connect():
   ssid = 'Anonymous'
   password =  '6339tktz6z'    ##ssid va password wifi
@@ -23,7 +24,10 @@ def connect():
   s.connect(ssid, password)
   while s.isconnected() == False:
     print("connecting to wifi")
-    utime.sleep(3)
+    led.value(0)
+    utime.sleep(1)
+    led.value(1)
+    utime.sleep(1)
     pass
   print("Connection successful")  
      
@@ -36,6 +40,7 @@ headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 while True:
   if button.value() == 0:
     while True:
+      led.value(1)
       connect() 
       data=adc.read()##tabdel etelat az analog be digital
       dade={'moisture':data}##dade ke ghast ersal on be server ra darem
@@ -47,21 +52,17 @@ while True:
       x=send.json()
       x=x['state']
       if x=='on':
-        led.value(0)
+        led2.value(0)
       else  :
-        led.value(1)
-      ##dict=ujson.load(x)
-      ##responses=ujson.load(response)
-      ##response=requests.get(url)
-      ##responses=response.json()
-      ##state=responses["abas"]
-      ##print(state)
+        led2.value(1)
       utime.sleep(1)
       send.close()
       gc.collect()
   else: 
-    utime.sleep(0.5)        ## press flash button to run
+    led.value(0)
+    ## press flash button to run
     pass
+
 
 
 

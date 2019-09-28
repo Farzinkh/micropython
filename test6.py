@@ -32,18 +32,25 @@ def connect():
   print("Connection successful")  
      
 url='http://192.168.43.79:8000/delta/tele/led/'
-dict={
-} ##dictionary baraye daryaft response
-
+value_list=[300,500,800,1024]
+ ##list baraye tahlil rotobat
+state_list=['waterlogged','dranch','damp','dry']
+ ##list baraye tahlil rotobat
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-
+counter=0
 while True:
   if button.value() == 0:
     while True:
       led.value(1)
       connect() 
       data=adc.read()##tabdel etelat az analog be digital
-      dade={'moisture':data}##dade ke ghast ersal on be server ra darem
+      for m in value_list:
+        if data<=m: 
+          state=state_list[counter]
+          break
+        else:
+          counter+=1
+      dade={'moisture':data,'state':state}##dade ke ghast ersal on be server ra darem
       dade_dic=ujson.dumps(dade)
       ##response=requests.post(url,data=dade,headers={'Connection':'close'})
       send=requests.request('POST', url, data=dade_dic,headers=headers, stream=False)
@@ -57,11 +64,13 @@ while True:
         led2.value(1)
       utime.sleep(1)
       send.close()
+      counter=0
       gc.collect()
   else: 
     led.value(0)
     ## press flash button to run
     pass
+
 
 
 

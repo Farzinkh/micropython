@@ -7,8 +7,9 @@ from machine import Pin,ADC ##tanzem halet pin ha
 adc=machine.ADC(0) ##taref pin analog
 gc.enable()
 led=Pin(2,Pin.OUT) 
-led2=Pin(14,Pin.OUT)
 button=Pin(0,Pin.IN)
+motora1=Pin(12,Pin.OUT)
+motorb1=Pin(13,Pin.OUT)
 led.value(1)
 def connect():
   ssid = 'Anonymous'
@@ -59,9 +60,14 @@ while True:
       x=send.json()
       x=x['state']
       if x=='on':
-        led2.value(0)
+        while data>300
+          motora1.value(1) 
+          motorb1.value(0)
+          utime.sleep(0.2)
+          data=adc.read()
       else  :
-        led2.value(1)
+        motora1.value(0) 
+        motorb1.value(0)
       utime.sleep(1)
       send.close()
       counter=0
@@ -70,8 +76,6 @@ while True:
     led.value(0)
     ## press flash button to run
     pass
-
-
 
 
 
